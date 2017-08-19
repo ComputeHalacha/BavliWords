@@ -1,0 +1,12 @@
+*.suo
+obj/
+bin/
+Thumbs.db
+*.user
+workspace.xml
+.vscode/
+.vs
+packages/
+debug/
+release/
+desktop.ini

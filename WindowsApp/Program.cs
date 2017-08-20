@@ -98,39 +98,46 @@ namespace WordsInShas
             doc.LoadXml(Properties.Resources.ShasData);
             foreach (string item in items)
             {
-                var parts = item.Split(',');
-                string maseches = parts[0];
-                int daf = parts.Length > 1 ? Convert.ToInt32(parts[1]) : 0,
-                    amud = parts.Length > 2 ? Convert.ToInt32(parts[2]) : 0;
-                string xpath = "//amud[m=\"" + maseches + "\"";
-                sb.Append("<hr /><h2>Maseches " + maseches);
-                if (daf > 0)
-                {
-                    xpath += " and d=\"" + daf.ToString() + "\"";
-                    sb.AppendFormat(" Daf {0} - {1}", daf, ToNumberHeb(daf));
-                }
-                if (amud > 0)
-                {
-                    xpath += " and a=\"" + amud.ToString() + "\"";
-                    sb.Append(amud == 1 ? " Amud Alef - עמוד א" : " Amud Bais - עמוד ב");
-                }
-                xpath += "]/t";
-                sb.Append("</h2>");
+                sb.AppendFormat("<h2>{0}</h2>", ParseTag(item));
                 string allText = "";
-                foreach (XmlElement n in doc.SelectNodes(xpath))
+                foreach (XmlElement n in doc.SelectNodes(GetXpath(item)))
                 {
                     allText += n.InnerText + " ";
                 }
-                string[] words = allText.Split(' ');
+                string[] words = allText.Split(new char[] { ' ' },
+                    StringSplitOptions.RemoveEmptyEntries);
                 int count = 1;
                 foreach (KeyValuePair<string, long> kvp in list)
                 {
-                    sb.AppendFormat("<div class=\"item\">{0:N0}. <strong>{1}</strong><br />Found in Shas {2:N0} times.<br />Found in this search {3:N0} times.</div>",
-                        count, kvp.Key, kvp.Value, words.Count(w => w.Trim() == kvp.Key));
+                    sb.Append(SingleWordHtml(
+                        kvp,
+                        words.Count(w => w.Trim() == kvp.Key),
+                        list.IndexOf(kvp) + 1,
+                        count));
                     count++;
                 }
+                sb.Append("<hr style=\"clear:both;\" />");
             }
             return sb.ToString();
+        }
+
+        private static string GetXpath(string item)
+        {
+            var parts = item.Split(',');
+            string maseches = parts[0];
+            int daf = parts.Length > 1 ? Convert.ToInt32(parts[1]) : 0,
+                amud = parts.Length > 2 ? Convert.ToInt32(parts[2]) : 0;
+            string xpath = "//amud[m=\"" + maseches + "\"";
+            if (daf > 0)
+            {
+                xpath += " and d=\"" + daf.ToString() + "\"";
+            }
+            if (amud > 0)
+            {
+                xpath += " and a=\"" + amud.ToString() + "\"";
+            }
+            xpath += "]";
+            return xpath;
         }
 
         private static List<KeyValuePair<string, long>> GetDataList(int numberOfWords)
@@ -139,10 +146,59 @@ namespace WordsInShas
             foreach (string line in Properties.Resources.CommonWords.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Take(numberOfWords + 1).Skip(1))
             {
                 string[] splitted = line.Split(',');
-                list.Add(new KeyValuePair<string, long>(splitted[0],Convert.ToInt32(splitted[1])));
+                list.Add(new KeyValuePair<string, long>(splitted[0], Convert.ToInt32(splitted[1])));
             }
 
             return list;
+        }
+
+        public static string ParseTag(string tag)
+        {
+            StringBuilder sb = new StringBuilder();
+            var parts = tag.Split(',');
+            string maseches = parts[0];
+            int daf = parts.Length > 1 ? Convert.ToInt32(parts[1]) : 0,
+                amud = parts.Length > 2 ? Convert.ToInt32(parts[2]) : 0;
+            sb.Append("Maseches " + maseches);
+            if (daf > 0)
+            {
+                sb.AppendFormat(" Daf {0} ", daf);
+            }
+            if (amud > 0)
+            {
+                sb.Append(amud == 1 ? " Amud Alef" : " Amud Bais");
+            }
+            if (daf + amud > 0)
+            {
+                sb.Append(" - ");
+                if (daf > 0)
+                {
+                    sb.AppendFormat(" דף {0}", ToNumberHeb(daf));
+                }
+                if (amud > 0)
+                {
+                    sb.Append(amud == 1 ? " עמוד א" : " עמוד ב");
+                }
+            }
+            return sb.ToString();
+        }
+
+        private static string SingleWordHtml(KeyValuePair<string, long> kvp, int instances, int rank, int count)
+        {
+            if(instances == 0)
+            {
+                return "";
+            }
+            return string.Format(@"<div class='item'>{0:N0}. 
+                <span class='word'>{1}</span>
+                <br />
+                <br />                
+                {3:N0} instances.
+                <br />
+                <br />                
+                Rank #{4:N0}
+                </div>",
+                count, kvp.Key, kvp.Value, instances, rank);
         }
 
         /// <summary>
@@ -193,7 +249,6 @@ namespace WordsInShas
             new Masechta ("Shabbos", "שבת", 157),
             new Masechta ("Eruvin", "ערובין", 105),
             new Masechta ("Pesachim", "פסחים", 121),
-            new Masechta ("Shekalim", "שקלים", 22),
             new Masechta ("Yoma", "יומא", 88),
             new Masechta ("Sukkah", "סוכה", 56),
             new Masechta ("Beitzah", "ביצה", 40),

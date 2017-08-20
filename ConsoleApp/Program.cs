@@ -15,8 +15,7 @@ namespace dostuff
             { "ברכות","Berachos"},
             { "שבת","Shabbos"},
             { "עירובין","Eruvin"},
-            { "פסחים","Pesachim"},
-            { "שקלים","Shekalim"},
+            { "פסחים","Pesachim"},            
             { "יומא","Yoma"},
             { "סוכה","Sukkah"},
             { "ביצה","Beitzah"},
@@ -83,7 +82,7 @@ namespace dostuff
         {
             //convertFromHTML();
             //Rename();
-            getTable();
+            //getTable();
             //fixXml();
             Console.WriteLine("Press <ENTER> to (ironically) exit...");
             Console.ReadLine();

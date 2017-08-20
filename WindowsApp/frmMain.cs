@@ -41,7 +41,7 @@ namespace WordsInShas
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.AddNode(this.treeView1.SelectedNode);
+
         }
 
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -51,31 +51,10 @@ namespace WordsInShas
 
         private void AddNode(TreeNode node)
         {
-            string[] splitTag = ((string)node.Tag).Split(',');
             var item = new ListViewItem();
-            if (splitTag.Length == 1)
-            {
-                item.Text = "The entire Maseches " + splitTag[0];
-            }
-            else if (splitTag.Length == 2)
-            {
-                item.Text = "Maseches " + splitTag[0] + ", The entire Daf " + splitTag[1] + " / " + Program.ToNumberHeb(Convert.ToInt32(splitTag[1]));
-            }
-            else if (splitTag.Length == 3)
-            {
-                item.Text = "Maseches " + splitTag[0] + ", Daf " + splitTag[1] + " / " + Program.ToNumberHeb(Convert.ToInt32(splitTag[1])) + ", Amud " + splitTag[2] + " / " + Program.ToNumberHeb(Convert.ToInt32(splitTag[2]));
-            }
-
+            item.Text = Program.ParseTag((string)node.Tag);
             item.Tag = node.Tag;
             this.listView1.Items.Add(item);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            foreach (ListViewItem item in this.listView1.SelectedItems)
-            {
-                this.listView1.Items.Remove(item);
-            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -89,6 +68,19 @@ namespace WordsInShas
             frmBrowser fb = new frmBrowser();
             fb.webBrowser1.DocumentText = Properties.Resources.HtmlTemplate.Replace("<!--RESULTS-->", html);
             fb.Show();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            this.AddNode(this.treeView1.SelectedNode);
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in this.listView1.SelectedItems)
+            {
+                this.listView1.Items.Remove(item);
+            }
         }
     }
 }

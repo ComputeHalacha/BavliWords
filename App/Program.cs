@@ -83,7 +83,7 @@ namespace dostuff
         {
             //convertFromHTML();
             //Rename();
-            //getTable();
+            getTable();
             //fixXml();
             Console.WriteLine("Press <ENTER> to (ironically) exit...");
             Console.ReadLine();
@@ -143,8 +143,8 @@ namespace dostuff
         static void getTable()
         {
             var dict = new Dictionary<string, long>();
-            Regex re = new Regex(@".+\/desc\>(.+)\<\/amud\>", RegexOptions.Compiled);
-            foreach (string line in File.ReadLines(path + "\\_SHAS.xml", Encoding.UTF8))
+            Regex re = new Regex(@"\<t\>(.+)\<\/t\>", RegexOptions.Compiled);
+            foreach (string line in File.ReadLines(path + "\\_ShasData.xml", Encoding.UTF8))
             {
                 var results = re.Match(line).Groups;
                 if (!(results.Count > 1)) continue;
@@ -155,7 +155,7 @@ namespace dostuff
                     {
                         if (!string.IsNullOrWhiteSpace(word))
                         {
-                            var cleaned = word.Trim().Replace("\"", "");
+                            var cleaned = word.Trim().Replace(",", "");
                             if (dict.ContainsKey(cleaned))
                             {
                                 dict[cleaned]++;
@@ -178,10 +178,10 @@ namespace dostuff
             {
                 using (var sw = new StreamWriter(file, Encoding.UTF8))
                 {
-                    sw.WriteLine("\"word\",\"instances\"");
+                    sw.WriteLine("word,instances");
                     foreach (var kvp in list)
                     {
-                        sw.WriteLine("\"" + kvp.Key + "\",\"" + kvp.Value.ToString() + "\"");
+                        sw.WriteLine(kvp.Key + "," + kvp.Value.ToString());
                     }
                 }
             }

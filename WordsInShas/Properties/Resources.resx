@@ -121,6 +121,9 @@
   <data name="CommonWords" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\results.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="HtmlTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HtmlTemplate.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="ShasData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\_ShasData.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

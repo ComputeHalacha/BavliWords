@@ -1,6 +1,6 @@
 ﻿namespace WordsInShas
 {
-    partial class Browser
+    partial class frmBrowser
     {
         /// <summary>
         /// Required designer variable.

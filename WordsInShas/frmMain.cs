@@ -10,24 +10,24 @@ using System.Windows.Forms;
 
 namespace WordsInShas
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            foreach(Masechta msch in Program.masechtaList)
+            foreach (Masechta msch in Masechta.MasechtaList)
             {
                 TreeNode masectaNode = new TreeNode(msch.NameEnglish);
                 masectaNode.Tag = msch.NameEnglish;
-                for(int i = 2; i <= msch.Dappim; i++)
+                for (int i = 2; i <= msch.Dappim; i++)
                 {
                     TreeNode daf = new TreeNode(i.ToString() + " / " + Program.ToNumberHeb(i)),
-                        amudA = new TreeNode("Amud 1 / עמוד א'"),
-                        amudB = new TreeNode("Amud 2 / עמוד ב'");
+                        amudA = new TreeNode("Amud Alef - עמוד א"),
+                        amudB = new TreeNode("Amud Bais - עמוד ב");
                     daf.Tag = masectaNode.Tag + "," + i.ToString();
                     amudA.Tag = daf.Tag + ",1";
                     amudB.Tag = daf.Tag + ",2";
@@ -41,7 +41,17 @@ namespace WordsInShas
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string[] splitTag = ((string)this.treeView1.SelectedNode.Tag).Split(',');
+            this.AddNode(this.treeView1.SelectedNode);
+        }
+
+        private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            this.AddNode(e.Node);
+        }
+
+        private void AddNode(TreeNode node)
+        {
+            string[] splitTag = ((string)node.Tag).Split(',');
             var item = new ListViewItem();
             if (splitTag.Length == 1)
             {
@@ -49,14 +59,14 @@ namespace WordsInShas
             }
             else if (splitTag.Length == 2)
             {
-                item.Text ="Maseches " + splitTag[0] + ", The entire Daf " + splitTag[1] + " / " + Program.ToNumberHeb(Convert.ToInt32(splitTag[1]));
+                item.Text = "Maseches " + splitTag[0] + ", The entire Daf " + splitTag[1] + " / " + Program.ToNumberHeb(Convert.ToInt32(splitTag[1]));
             }
             else if (splitTag.Length == 3)
             {
                 item.Text = "Maseches " + splitTag[0] + ", Daf " + splitTag[1] + " / " + Program.ToNumberHeb(Convert.ToInt32(splitTag[1])) + ", Amud " + splitTag[2] + " / " + Program.ToNumberHeb(Convert.ToInt32(splitTag[2]));
             }
 
-            item.Tag = this.treeView1.SelectedNode.Tag;
+            item.Tag = node.Tag;
             this.listView1.Items.Add(item);
         }
 
@@ -71,11 +81,14 @@ namespace WordsInShas
         private void button3_Click(object sender, EventArgs e)
         {
             var list = new List<string>();
-            foreach(ListViewItem item in this.listView1.Items)
+            foreach (ListViewItem item in this.listView1.Items)
             {
                 list.Add((string)item.Tag);
             }
             var html = Program.getHtml(list, (int)this.numericUpDown1.Value);
+            frmBrowser fb = new frmBrowser();
+            fb.webBrowser1.DocumentText = Properties.Resources.HtmlTemplate.Replace("<!--RESULTS-->", html);
+            fb.Show();
         }
     }
 }

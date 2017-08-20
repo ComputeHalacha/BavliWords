@@ -1,6 +1,6 @@
 ﻿namespace WordsInShas
 {
-    partial class Form1
+    partial class frmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -35,6 +35,8 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,17 +46,18 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView1.FullRowSelect = true;
             this.treeView1.HideSelection = false;
-            this.treeView1.Location = new System.Drawing.Point(11, 13);
+            this.treeView1.Location = new System.Drawing.Point(11, 25);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(257, 488);
             this.treeView1.TabIndex = 0;
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
             // listView1
             // 
             this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.Location = new System.Drawing.Point(331, 13);
+            this.listView1.Location = new System.Drawing.Point(331, 25);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(255, 488);
             this.listView1.TabIndex = 1;
@@ -64,7 +67,7 @@
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.button1.Location = new System.Drawing.Point(275, 205);
+            this.button1.Location = new System.Drawing.Point(275, 217);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(50, 24);
             this.button1.TabIndex = 2;
@@ -75,7 +78,7 @@
             // button2
             // 
             this.button2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.button2.Location = new System.Drawing.Point(275, 236);
+            this.button2.Location = new System.Drawing.Point(275, 248);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(50, 24);
             this.button2.TabIndex = 3;
@@ -127,11 +130,31 @@
             0,
             0});
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 5);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(225, 17);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Select an Amud, Daf or Masechta";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(328, 5);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(105, 17);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Selected Items";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(601, 571);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button3);
@@ -158,6 +181,8 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 

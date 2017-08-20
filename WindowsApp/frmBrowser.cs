@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace WordsInShas
 {
-    public partial class Browser : Form
+    public partial class frmBrowser : Form
     {
-        public Browser()
+        public frmBrowser()
         {
             InitializeComponent();
         }

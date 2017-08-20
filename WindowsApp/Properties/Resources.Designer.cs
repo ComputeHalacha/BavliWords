@@ -99,6 +99,25 @@ namespace WordsInShas.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///
+        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///    &lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///    &lt;title&gt;&lt;/title&gt;
+        ///&lt;/head&gt;
+        ///&lt;body&gt;
+        ///
+        ///&lt;/body&gt;
+        ///&lt;/html&gt;.
+        /// </summary>
+        internal static string HtmlTemplate {
+            get {
+                return ResourceManager.GetString("HtmlTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf - 8&quot;?&gt;
         ///&lt;shas&gt;
         ///&lt;amud&gt;&lt;m&gt;Arachin&lt;/m&gt;&lt;d&gt;2&lt;/d&gt;&lt;a&gt;1&lt;/a&gt;&lt;t&gt;הכל מעריכין ונערכין נודרין ונידרין כהנים לוים וישראלים נשים ועבדים טומטום ואנדרוגינוס נודרין ונידרין ומעריכין אבל לא נערכין שאינו נערך אלא הזכר ודאי ונקבה ודאית חרש שוטה וקטן נידרין ונערכין אבל לא נודרין ולא מעריכין מפני שאין בהם דעת הכל מעריכין לאתויי מאי לאתויי מופלא סמוך לאיש נערכין לאתויי מאי לאתויי מנוול ומוכה שחין סד&quot;א נדר בערכך כתיב כל שישנו בדמים ישנו בערכין וכל שאינו בדמים אינו בערכין קמ&quot;ל נפשות כל דהו נודרין ל [rest of string was truncated]&quot;;.

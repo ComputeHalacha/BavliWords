@@ -148,7 +148,7 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Selected Items";
             // 
-            // Form1
+            // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -163,8 +163,8 @@
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.treeView1);
             this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "frmMain";
+            this.Text = "Words in Sha\"s";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);

@@ -38,22 +38,12 @@ namespace WordsInShas
                 this.treeView1.Nodes.Add(masectaNode);
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            this.AddNode(e.Node);
-        }
-
+        
         private void AddNode(TreeNode node)
         {
             var item = new ListViewItem();
             item.Text = Program.ParseTag((string)node.Tag);
-            item.Tag = node.Tag;
+            item.Name = (string)node.Tag;            
             this.listView1.Items.Add(item);
         }
 
@@ -62,20 +52,27 @@ namespace WordsInShas
             var list = new List<string>();
             foreach (ListViewItem item in this.listView1.Items)
             {
-                list.Add((string)item.Tag);
+                list.Add(item.Name);
             }
-            var html = Program.getHtml(list, (int)this.numericUpDown1.Value);
+            var html = Program.getHtml(list, (int)this.numericUpDown1.Value, (int)this.numericUpDown2.Value);
             frmBrowser fb = new frmBrowser();
             fb.webBrowser1.DocumentText = Properties.Resources.HtmlTemplate.Replace("<!--RESULTS-->", html);
             fb.Show();
-        }
+        }        
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            this.AddNode(this.treeView1.SelectedNode);
+            if (e.Node.Checked)
+            {
+                this.AddNode(e.Node);
+            }
+            else
+            {
+                this.listView1.Items.RemoveByKey((string)e.Node.Tag);
+            }
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void listView1_DoubleClick(object sender, EventArgs e)
         {
             foreach (ListViewItem item in this.listView1.SelectedItems)
             {

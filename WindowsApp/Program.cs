@@ -90,10 +90,10 @@ namespace WordsInShas
             return retval.ToString();
         }
 
-        public static string getHtml(IEnumerable<string> items, int numberOfWords)
+        public static string getHtml(IEnumerable<string> items, int fromNumber, int toNumber)
         {
             var sb = new StringBuilder();
-            var list = GetDataList(numberOfWords);
+            var list = GetDataList(fromNumber, toNumber);
             var doc = new XmlDocument();
             doc.LoadXml(Properties.Resources.ShasData);
             foreach (string item in items)
@@ -107,12 +107,11 @@ namespace WordsInShas
                 string[] words = allText.Split(new char[] { ' ' },
                     StringSplitOptions.RemoveEmptyEntries);
                 int count = 1;
-                foreach (KeyValuePair<string, long> kvp in list)
+                foreach (SingleWord singleWord in list)
                 {
                     sb.Append(SingleWordHtml(
-                        kvp,
-                        words.Count(w => w.Trim() == kvp.Key),
-                        list.IndexOf(kvp) + 1,
+                        singleWord,
+                        words.Count(w => w.Trim() == singleWord.Word),
                         count));
                     count++;
                 }
@@ -140,13 +139,19 @@ namespace WordsInShas
             return xpath;
         }
 
-        private static List<KeyValuePair<string, long>> GetDataList(int numberOfWords)
+        private static List<SingleWord> GetDataList(int fromNumber, int toNumber)
         {
-            var list = new List<KeyValuePair<string, long>>();
-            foreach (string line in Properties.Resources.CommonWords.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Take(numberOfWords + 1).Skip(1))
+            var list = new List<SingleWord>();
+            int ranker = fromNumber;
+            foreach (string line in Properties.Resources.CommonWords.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                .Take(toNumber + 1)
+                .Skip(fromNumber))
             {
                 string[] splitted = line.Split(',');
-                list.Add(new KeyValuePair<string, long>(splitted[0], Convert.ToInt32(splitted[1])));
+                list.Add(new SingleWord {
+                    Word = splitted[0],
+                    Rank = ranker });
+                ranker++;
             }
 
             return list;
@@ -183,9 +188,9 @@ namespace WordsInShas
             return sb.ToString();
         }
 
-        private static string SingleWordHtml(KeyValuePair<string, long> kvp, int instances, int rank, int count)
+        private static string SingleWordHtml(SingleWord singleWord, int instances, int count)
         {
-            if(instances == 0)
+            if (instances == 0)
             {
                 return "";
             }
@@ -193,12 +198,12 @@ namespace WordsInShas
                 <span class='word'>{1}</span>
                 <br />
                 <br />                
-                {3:N0} instances.
+                {2:N0} instances.
                 <br />
                 <br />                
-                Rank #{4:N0}
+                Rank #{3:N0}
                 </div>",
-                count, kvp.Key, kvp.Value, instances, rank);
+                count, singleWord.Word, instances, singleWord.Rank);
         }
 
         /// <summary>
@@ -211,6 +216,12 @@ namespace WordsInShas
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
         }
+    }
+
+    public struct SingleWord
+    {
+        public string Word;
+        public int Rank;
     }
 
     /// <summary>

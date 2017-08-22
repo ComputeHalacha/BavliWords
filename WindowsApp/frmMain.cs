@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WordsInShas
@@ -15,6 +9,11 @@ namespace WordsInShas
         public frmMain()
         {
             InitializeComponent();
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -56,7 +55,7 @@ namespace WordsInShas
             }
             var html = Program.getHtml(list, (int)this.numericUpDown1.Value, (int)this.numericUpDown2.Value);
             frmBrowser fb = new frmBrowser();
-            fb.webBrowser1.DocumentText = Properties.Resources.HtmlTemplate.Replace("<!--RESULTS-->", html);
+            fb.webBrowser1.DocumentText = Properties.Resources.HtmlTemplate.Replace("<!--RESULTS-->", html);            
             fb.Show();
         }        
 
@@ -78,6 +77,11 @@ namespace WordsInShas
             {
                 this.listView1.Items.Remove(item);
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new frmSkippedWords().Show();
         }
     }
 }

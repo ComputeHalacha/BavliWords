@@ -3,15 +3,28 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Bavli Words</title>
     <style type="text/css">
+        @media print {
+            .noPrint { display: none; }
+        }
+        html, body { padding: 0; margin: 0; background-color: #fafaff; }       
         body { font-family: Verdana; padding: 5px; }
-        div.item { float: left; width: 20%; background-color: #f1f1f1; border-radius: 5px; padding: 10px; text-align: center; margin: 10px;font-size:8pt; }
-            div.item > span.word { font-size: 14pt; font-family: Narkisim, Arial; padding: 5px; background-color: #ffe;font-weight:bold;color:#800; }
+        a { font-size: 6pt; color: #88c; cursor: pointer; }
+            a:hover { text-decoration: underline; }
+        div.item { float: left; width: 20%; background-color: #f1f1f1; border-radius: 5px; padding: 10px; text-align: center; margin: 10px; font-size: 8pt; }
+            div.item > span.word { font-size: 14pt; font-family: Narkisim, Arial; padding: 5px; background-color: #ffe; font-weight: bold; color: #800; }
     </style>
+    <script type="text/javascript">
+        function skipWord(rank, el) {
+            window.external.AddWordToSkipped(rank);
+            el.parentNode.parentNode.removeChild(el.parentNode);
+        }
+    </script>
 </head>
 <body>
-    <input type="button" style="float:right;" value="Print" onclick="window.print();" />
+    <input class="noPrint" type="button" style="float:right;" value="Print" onclick="window.print();" />
     <h2>Words In Shas</h2>
     <hr />
     <!--RESULTS-->

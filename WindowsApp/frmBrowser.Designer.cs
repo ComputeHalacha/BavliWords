@@ -33,21 +33,21 @@
             // 
             // webBrowser1
             // 
-            this.webBrowser1.AllowNavigation = false;
             this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(15, 16);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.Size = new System.Drawing.Size(1154, 699);
+            this.webBrowser1.Size = new System.Drawing.Size(866, 568);
             this.webBrowser1.TabIndex = 0;
             // 
             // frmBrowser
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1154, 699);
+            this.ClientSize = new System.Drawing.Size(866, 568);
             this.Controls.Add(this.webBrowser1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmBrowser";
             this.ShowIcon = false;
             this.Text = "Words in Sha\"s - Results";

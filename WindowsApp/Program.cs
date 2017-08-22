@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
@@ -109,11 +108,14 @@ namespace WordsInShas
                 int count = 1;
                 foreach (SingleWord singleWord in list)
                 {
-                    sb.Append(SingleWordHtml(
-                        singleWord,
-                        words.Count(w => w.Trim() == singleWord.Word),
-                        count));
-                    count++;
+                    if (!Properties.Settings.Default.SkipWords.Contains(singleWord.Word))
+                    {
+                        sb.Append(SingleWordHtml(
+                            singleWord,
+                            words.Count(w => w.Trim() == singleWord.Word),
+                            count));
+                        count++;
+                    }
                 }
                 sb.Append("<hr style=\"clear:both;\" />");
             }
@@ -148,13 +150,25 @@ namespace WordsInShas
                 .Skip(fromNumber))
             {
                 string[] splitted = line.Split(',');
-                list.Add(new SingleWord {
+                list.Add(new SingleWord
+                {
                     Word = splitted[0],
-                    Rank = ranker });
+                    Rank = ranker
+                });
                 ranker++;
             }
 
             return list;
+        }
+
+        public static void SkipWordByRank(int rank)
+        {
+            using (StringReader sr = new StringReader(Properties.Resources.CommonWords))
+            {
+                for(int i = 0; i < rank; i++, sr.ReadLine()) { }
+                string[] splitted = sr.ReadLine().Split(',');
+                Properties.Settings.Default.SkipWords.Add(splitted[0]);
+            }
         }
 
         public static string ParseTag(string tag)
@@ -202,7 +216,10 @@ namespace WordsInShas
                 <br />
                 <br />                
                 Rank #{3:N0}
-                </div>",
+                <br />
+                <br />" +
+                "<a class=\"noPrint\" onclick=\"javascript:skipWord({3}, this);return false;\">Skip Word</a>" +
+                "</div>",
                 count, singleWord.Word, instances, singleWord.Rank);
         }
 

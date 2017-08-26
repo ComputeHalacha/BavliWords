@@ -15,23 +15,28 @@ namespace WordsInShas
             this.LoadList();
         }
 
+        private void frmSkippedWords_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
+        }
+
         private void LoadList()
         {
-            this.listBox1.Items.Clear();
+            this.dataGridView1.Rows.Clear();
             foreach(string word in Properties.Settings.Default.SkipWords)
             {
-                this.listBox1.Items.Add(word);
+                this.dataGridView1.Rows.Add(word, "Remove");
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            foreach(string word in this.listBox1.SelectedItems)
+            if(e.ColumnIndex == 1)
             {
-                Properties.Settings.Default.SkipWords.Remove(word);               
+                string word = (string)this.dataGridView1.Rows[e.RowIndex].Cells[0].Value;
+                Properties.Settings.Default.SkipWords.Remove(word);
+                this.dataGridView1.Rows.RemoveAt(e.RowIndex);
             }
-            Properties.Settings.Default.Save();
-            this.LoadList();
-        }
+        }        
     }
 }
